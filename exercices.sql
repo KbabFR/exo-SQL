@@ -232,7 +232,7 @@ GROUP BY livre.categorie
 ORDER BY 2;
 
 /* exo 39 Lister les 10 livres les plus empruntés (avec le nombre d’emprunt) */
-[Rebuilding]
+/* [ Fonctionnel mais sans sous-select ] */
 SELECT livre.titre, COUNT(*)
 FROM emprunt
 JOIN livre ON emprunt.id_livre = livre.id
@@ -242,9 +242,38 @@ LIMIT 10;
 
 /* exo 40 Lister tous les abonnés avec le dernier livre qu’ils ont empruntés même s’ils n’ont jamais
 emprunté de livre (sous select dans le SELECT) */
-[Unfinished]
+/* [ Pas fini ] */
 SELECT abonne.nom, abonne.prenom, (SELECT livre.titre
 	FROM abonne
 	join
 FROM abonne
 ORDER BY abonne.id;
+
+/* exo 41 Lister les livre s qui n'ont jamais été empruntés */
+/* [ Pas fait ] */
+
+/* exo 47 Ajouter une ligne dans la table abonné avec votre nom */
+INSERT INTO abonne(nom) VALUES ("Warin");
+
+/* exo 48 Ajouter 3 personnes dans la table abonné en une seule requête */
+INSERT INTO abonne(nom) VALUES ("Boivin"), ("Brun"), ("Blanc");
+
+/* exo 49 Mettre à jour la date de fin de votre abonnement à la date du jour + 1 an */
+UPDATE abonne SET date_fin_abo = DATE_ADD(CURDATE(), INTERVAL 1 YEAR)
+WHERE nom = "Warin";
+
+/* exo 50 Supprimer la ligne correspondant à votre nom dans la table abonné */
+DELETE FROM abonne
+WHERE nom = "Warin";
+
+/* exo 51 Essayer d'insérer une ligne dans la table livre avec un id_auteur qui n’existe pas dans la table auteur */
+INSERT INTO livre VALUES ("Dans le cerveau du GAMER", NULL, NULL, 500, 1, NULL);
+
+/* exo 52 Remplir la table genre à partir des différents genre présents dans la table livre */
+INSERT INTO genre(nom_genre) SELECT DISTINCT genre FROM livre;
+
+/* exo 53 Mettre à jour la colonne id_genre de la table livre en fonction de la valeur contenue dans la colonne genre */
+UPDATE livre SET livre.id_genre = (SELECT genre.id FROM genre WHERE genre.nom_genre = livre.genre);
+
+DELETE FROM genre
+WHERE nom_genre = "poésie";
