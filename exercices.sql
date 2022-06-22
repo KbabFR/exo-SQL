@@ -201,9 +201,9 @@ HAVING COUNT(*) > 1
 ORDER BY 3 DESC;
 
 /* exo 32 Trouver le nombre de livre empruntés pour chaque année */
-SELECT EXTRACT(YEAR FROM date_emprunt) AS année, COUNT(*) AS nb_livre
+SELECT EXTRACT(YEAR FROM date_emprunt), COUNT(*) AS nb_livre
 FROM emprunt
-GROUP BY EXTRACT(YEAR FROM date_emprunt);
+GROUP BY EXTRACT(YEAR FROM date_emprunt)AS annee;
 
 /* exo 33 Trouver l'âge moyen des abonnés */
 SELECT AVG(TIMESTAMPDIFF(YEAR, date_naissance, CURDATE())) AS age_moyen
@@ -241,3 +241,5 @@ LIMIT 10;
 
 /* exo 40 Lister tous les abonnés avec le dernier livre qu’ils ont empruntés même s’ils n’ont jamais
 emprunté de livre (sous select dans le SELECT) */
+SELECT abonne.nom, abonne.prenom
+FROM abonne;
