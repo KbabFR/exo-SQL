@@ -232,6 +232,7 @@ GROUP BY livre.categorie
 ORDER BY 2;
 
 /* exo 39 Lister les 10 livres les plus empruntés (avec le nombre d’emprunt) */
+[Rebuilding]
 SELECT livre.titre, COUNT(*)
 FROM emprunt
 JOIN livre ON emprunt.id_livre = livre.id
@@ -241,6 +242,7 @@ LIMIT 10;
 
 /* exo 40 Lister tous les abonnés avec le dernier livre qu’ils ont empruntés même s’ils n’ont jamais
 emprunté de livre (sous select dans le SELECT) */
+[Unfinished]
 SELECT abonne.nom, abonne.prenom, (SELECT livre.titre
 	FROM abonne
 	join
