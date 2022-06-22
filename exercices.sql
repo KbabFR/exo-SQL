@@ -28,7 +28,8 @@ FROM abonne
 WHERE UPPER(ville) = 'MONTPELLIER'
 ORDER BY 1;
 
-/* exo 9 Récupérer tous les abonnés dont l’abonnement est valide ( date_fin_abo supérieure ou égale à la date courante) */
+/* exo 9 Récupérer tous les abonnés dont l’abonnement est valide 
+( date_fin_abo supérieure ou égale à la date courante) */
 SELECT nom, prenom
 FROM abonne
 WHERE date_fin_abo >= CURDATE()/* AND date_inscription <= CURDATE()*/
@@ -52,7 +53,8 @@ FROM abonne
 WHERE MONTH(date_naissance) = MONTH(DATE_ADD(CURDATE(), INTERVAL 1 DAY)) AND DAY(date_naissance) = DAY(DATE_ADD(CURDATE(), INTERVAL 1 DAY))
 ORDER BY 1, 2;
 
-/* exo 13 Récupérer tous les abonnés qui se sont abonnés la semaine dernière (de lundi de la semaine dernière à dimanche dernier) */
+/* exo 13 Récupérer tous les abonnés qui se sont abonnés la semaine dernière 
+(de lundi de la semaine dernière à dimanche dernier) */
 SELECT nom, prenom, date_inscription
 FROM abonne
 WHERE WEEKOFYEAR(date_inscription) = WEEKOFYEAR(DATE_SUB(CURDATE(), INTERVAL 1 WEEK))
@@ -68,7 +70,8 @@ FROM abonne
 WHERE YEAR(DATE_SUB(CURDATE(), INTERVAL TO_DAYS(date_naissance) DAY)) >= 30
 AND YEAR(DATE_SUB(CURDATE(), INTERVAL TO_DAYS(date_naissance) DAY)) < 40;
 
-/* exo 16 Afficher le nombre d’abonné pour chaque ville et trier par ordre descendantdu nombre d'abonnés (Classement des villes par nombre d'abonnés) */
+/* exo 16 Afficher le nombre d’abonné pour chaque ville 
+et trier par ordre descendantdu nombre d'abonnés (Classement des villes par nombre d'abonnés) */
 SELECT ville, COUNT(*) AS nb_abonnés_par_villes
 FROM abonne
 GROUP BY ville
@@ -80,7 +83,8 @@ FROM abonne
 GROUP BY ville HAVING COUNT(*) >= 20
 ORDER BY 2 DESC, 1;
 
-/* exo 18 Récupérer les abonnés dont le nom commence par A et afficher leur statut d’abonnement sous la forme “abonné jus qu’au dd/mm/yyyy” ou “expiré” */
+/* exo 18 Récupérer les abonnés dont le nom commence par A 
+et afficher leur statut d’abonnement sous la forme “abonné jus qu’au dd/mm/yyyy” ou “expiré” */
 SELECT nom, prenom, case
         when date_fin_abo >= CURDATE() 
         then CONCAT("abonné(e) jusqu'au ", date_format(date_fin_abo , "%d/%m/%Y"))
@@ -228,3 +232,12 @@ GROUP BY livre.genre
 ORDER BY 2;
 
 /* exo 39 Lister les 10 livres les plus empruntés (avec le nombre d’emprunt) */
+SELECT livre.titre, COUNT(*)
+FROM emprunt
+JOIN livre ON emprunt.id_livre = livre.id
+GROUP BY emprunt.id_livre
+ORDER BY 2 DESC
+LIMIT 10;
+
+/* exo 40 Lister tous les abonnés avec le dernier livre qu’ils ont empruntés même s’ils n’ont jamais
+emprunté de livre (sous select dans le SELECT) */
