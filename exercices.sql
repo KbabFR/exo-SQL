@@ -201,16 +201,16 @@ HAVING COUNT(*) > 1
 ORDER BY 3 DESC;
 
 /* exo 32 Trouver le nombre de livre empruntés pour chaque année */
-SELECT EXTRACT(YEAR FROM date_emprunt), COUNT(*) AS nb_livre
+SELECT EXTRACT(YEAR FROM date_emprunt) AS annee, COUNT(*) AS nb_livre
 FROM emprunt
-GROUP BY EXTRACT(YEAR FROM date_emprunt)AS annee;
+GROUP BY annee;
 
 /* exo 33 Trouver l'âge moyen des abonnés */
-SELECT AVG(TIMESTAMPDIFF(YEAR, date_naissance, CURDATE())) AS age_moyen
+SELECT CAST(AVG(TIMESTAMPDIFF(YEAR, date_naissance, CURDATE())) AS int) AS age_moyen
 FROM abonne;
 
 /* exo 34 Trouver la ville ayant la moyenne d'âge la plus petite */
-SELECT AVG(TIMESTAMPDIFF(YEAR, date_naissance, CURDATE())) AS age_moyen, UPPER(ville)
+SELECT CAST(AVG(TIMESTAMPDIFF(YEAR, date_naissance, CURDATE())) AS int) AS age_moyen, UPPER(ville)
 FROM abonne
 GROUP BY upper(ville)
 ORDER BY 1
@@ -224,11 +224,11 @@ HAVING COUNT(*) > 1
 ORDER BY 3 DESC, 1, 2;
 
 /* exo 36 Trouver l'âge moyen des lecteurs de chaque catégorie */
-SELECT livre.genre, AVG(TIMESTAMPDIFF(YEAR, abonne.date_naissance, CURDATE())) AS age_moyen_genre
+SELECT livre.categorie, AVG(TIMESTAMPDIFF(YEAR, abonne.date_naissance, CURDATE())) AS age_moyen_genre
 FROM emprunt
 JOIN livre ON emprunt.id_livre = livre.id
 JOIN abonne ON emprunt.id_abonne = abonne.id
-GROUP BY livre.genre
+GROUP BY livre.categorie
 ORDER BY 2;
 
 /* exo 39 Lister les 10 livres les plus empruntés (avec le nombre d’emprunt) */
@@ -241,5 +241,8 @@ LIMIT 10;
 
 /* exo 40 Lister tous les abonnés avec le dernier livre qu’ils ont empruntés même s’ils n’ont jamais
 emprunté de livre (sous select dans le SELECT) */
-SELECT abonne.nom, abonne.prenom
-FROM abonne;
+SELECT abonne.nom, abonne.prenom, (SELECT livre.titre
+	FROM abonne
+	join
+FROM abonne
+ORDER BY abonne.id;
